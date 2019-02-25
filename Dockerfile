@@ -50,6 +50,7 @@ RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 # Install Ansible inventory file.
 RUN mkdir -p /etc/ansible
 RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
+COPY ansible.cfg /etc/ansible/ansible.cfg
 
 # Keys to access repo and verify host
 RUN mkdir -p /root/.ssh/ \
