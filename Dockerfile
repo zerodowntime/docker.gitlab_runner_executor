@@ -39,6 +39,7 @@ RUN yum makecache fast \
 
 RUN pip install --upgrade pip \
   && pip install --no-cache-dir \
+      setuptools \
       ansible==${ANSIBLE_VERSION} \
       molecule==${MOLECULE_VERSION} \
       docker \
