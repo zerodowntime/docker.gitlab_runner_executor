@@ -37,9 +37,10 @@ RUN yum makecache fast \
   && yum clean all \
   && vagrant plugin install vagrant-libvirt
 
-RUN pip install --upgrade pip \
-  && pip install --no-cache-dir \
+RUN pip install --upgrade \
+      pip \
       setuptools \
+  && pip install --no-cache-dir \
       ansible==${ANSIBLE_VERSION} \
       molecule==${MOLECULE_VERSION} \
       docker \
