@@ -13,10 +13,13 @@ ANSIBLE_VERSIONS=(
   "2.7.6"
   "2.7.7"
   "2.7.8"
+  "2.7.9"
 )
+
+MOLECULE_VERSION="2.20.0"
 
 for ANSIBLE_VERSION in "${ANSIBLE_VERSIONS[@]}"; do
   FULL_IMAGE_NAME="${DOCKER_REPO?}:ansible-${ANSIBLE_VERSION?}"
-  docker build --build-arg ANSIBLE_VERSION="${ANSIBLE_VERSION}" -f "${DOCKERFILE_PATH}" -t "${FULL_IMAGE_NAME}" ".${BUILD_PATH}"
+  docker build --build-arg ANSIBLE_VERSION="${ANSIBLE_VERSION}" --build-arg MOLECULE_VERSION="${MOLECULE_VERSION}" -f "${DOCKERFILE_PATH}" -t "${FULL_IMAGE_NAME}" ".${BUILD_PATH}"
   docker push "${FULL_IMAGE_NAME}"
 done
