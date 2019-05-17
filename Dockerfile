@@ -1,8 +1,8 @@
 FROM centos:7
 
 ENV container docker
-ARG ANSIBLE_VERSION=2.7.1
-ARG MOLECULE_VERSION=2.19.0
+ARG ANSIBLE_VERSION=2.7.0
+ARG MOLECULE_VERSION=2.20.0
 
 # Install systemd -- See https://hub.docker.com/_/centos/
 RUN yum -y update; yum clean all; \
