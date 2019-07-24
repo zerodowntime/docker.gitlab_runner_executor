@@ -1,5 +1,11 @@
 # History
 
+## 1.4.0 (Jul 24, 2019)
+
+* updated molecule `2.20.0`->`2.20.2`
+* updated vagrant `2.2.3`->`2.2.2`
+* updated ansible `2.8+`
+
 ## 1.3.0 (May 17, 2019)
 
 Important Note:

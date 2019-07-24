@@ -1,8 +1,8 @@
 FROM centos:7
 
 ENV container docker
-ARG ANSIBLE_VERSION=2.7.0
-ARG MOLECULE_VERSION=2.20.0
+ARG ANSIBLE_VERSION=2.8.0
+ARG MOLECULE_VERSION=2.20.2
 
 # Install systemd -- See https://hub.docker.com/_/centos/
 RUN yum -y update; yum clean all; \
@@ -27,7 +27,7 @@ RUN yum makecache fast \
       python-devel \
       openssh-clients \
       git \
-      https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_x86_64.rpm \
+      https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.rpm \
       libvirt \
       libvirt-devel \
       libvirt-python \
