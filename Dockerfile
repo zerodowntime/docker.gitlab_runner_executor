@@ -41,8 +41,8 @@ RUN pip install --upgrade \
       pip \
       setuptools \
   && pip install --no-cache-dir \
-      ansible==${ANSIBLE_VERSION} \
-      molecule==${MOLECULE_VERSION} \
+      ansible==${ANSIBLE_VERSION}.* \
+      molecule==${MOLECULE_VERSION}.* \
       docker \
       python-vagrant
 

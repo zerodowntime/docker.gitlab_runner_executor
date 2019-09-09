@@ -1,5 +1,10 @@
 # History
 
+## 1.4.1 (Sept 9, 2019)
+
+* updated molecule `2.20.02`->`2.22`
+* changed support for ansible from patch versions to minors
+
 ## 1.4.0 (Jul 24, 2019)
 
 * updated molecule `2.20.0`->`2.20.2`
