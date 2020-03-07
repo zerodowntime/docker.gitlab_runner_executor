@@ -2,7 +2,7 @@ FROM centos:7
 
 ENV container docker
 ARG ANSIBLE_VERSION=2.8.0
-ARG MOLECULE_VERSION=2.20.2
+ARG MOLECULE_VERSION=2.22
 
 # Install systemd -- See https://hub.docker.com/_/centos/
 RUN yum -y update; yum clean all; \
@@ -42,7 +42,7 @@ RUN pip install --upgrade \
       setuptools \
   && pip install --no-cache-dir \
       ansible==${ANSIBLE_VERSION}.* \
-      molecule==${MOLECULE_VERSION}.* \
+      molecule==${MOLECULE_VERSION} \
       docker \
       python-vagrant
 

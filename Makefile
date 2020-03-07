@@ -11,7 +11,7 @@ VERSIONS += 2.7.0 2.7
 VERSIONS += 2.8.0 2.8
 
 ANSIBLE_VERSION ?= $(lastword $(VERSIONS))
-MOLECULE_VERSION ?= 2.22.0
+MOLECULE_VERSION ?= 2.22
 
 IMAGE_NAME ?= zerodowntime/gitlab_runner_executor_molecule
 IMAGE_TAG  ?= ansible-${ANSIBLE_VERSION}
