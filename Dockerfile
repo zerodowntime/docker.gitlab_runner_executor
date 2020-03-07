@@ -27,7 +27,7 @@ RUN yum makecache fast \
       python-devel \
       openssh-clients \
       git \
-      https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.rpm \
+      https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm \
       libvirt \
       libvirt-devel \
       libvirt-python \
