@@ -1,5 +1,13 @@
 # History
 
+## 1.4.2 (Match 7, 2020)
+
+* Added vim to image
+* Updated molecule in dockerfile
+* Removed debug from ansible default
+* Dropped ansible 2.6 for 2.9
+* Bumped vagrant version
+
 ## 1.4.1 (Sept 9, 2019)
 
 * updated molecule `2.20.02`->`2.22`
