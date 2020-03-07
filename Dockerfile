@@ -33,6 +33,7 @@ RUN yum makecache fast \
       libvirt-python \
       virt-install \
   && yum install -y libtool-ltdl \
+  && yum install -y vim \
   && yum remove python-requests -y \
   && yum clean all \
   && vagrant plugin install vagrant-libvirt
