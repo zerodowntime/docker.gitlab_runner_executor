@@ -67,19 +67,19 @@ RUN set -eux; \
   yamllint \
   ansible==${ANSIBLE_VERSION}.*
 
-# Disable requiretty.
 RUN set -eux; \
-  sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
-
-# Install Ansible inventory file.
-RUN set -eux; \
+  # Setup locale
+  LC_ALL=en_US.utf8 \
+  export LC_ALL; \
+  # Disable requiretty.
+  sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers; \
+  # Install Ansible inventory file.
   mkdir -p /etc/ansible; \
-  echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
-COPY ansible.cfg /etc/ansible/ansible.cfg
-
-# Keys to access repo and verify host
-RUN set -eux; \
+  echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts; \
+  # Keys to access repo and verify host
   mkdir -p /root/.ssh/; \
   chmod 700 ~/.ssh; \
   ssh-keyscan -H git.zdt.io >> /root/.ssh/known_hosts; \
   chmod 644 /root/.ssh/known_hosts
+
+COPY ansible.cfg /etc/ansible/ansible.cfg
