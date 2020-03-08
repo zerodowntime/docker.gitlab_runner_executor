@@ -1,5 +1,13 @@
 # History
 
+## 1.5.0 (Match 8, 2020)
+
+* Dropped python2 in favour of python3
+* Cleaner Dockerfile
+* Bumped molecule from `2.22` to `3.x`
+* Following molecule, change in policy to manage ansible N/N-1 versions, instead of N/N-1/N-2 as before. Currently older support ansible is 2.8.0
+* To avoid old images overrides, the only maintained format of images is `ansible-[ansible_version]-molecule-[molecule_version]`
+
 ## 1.4.2 (Match 7, 2020)
 
 * Added vim to image
