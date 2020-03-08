@@ -7,15 +7,15 @@
 # VERSIONS += 2.4.2 
 # VERSIONS += 2.5.15 
 # VERSIONS += 2.6.0 2.6
-VERSIONS += 2.7.0 2.7
+# VERSIONS += 2.7.0 2.7
 VERSIONS += 2.8.0 2.8
 VERSIONS += 2.9.0 2.9
 
 ANSIBLE_VERSION ?= $(lastword $(VERSIONS))
-MOLECULE_VERSION ?= 2.22
+MOLECULE_VERSION ?= 3.0
 
 IMAGE_NAME ?= zerodowntime/gitlab_runner_executor_molecule
-IMAGE_TAG  ?= ansible-${ANSIBLE_VERSION}
+IMAGE_TAG  ?= ansible-${ANSIBLE_VERSION}-molecule-${MOLECULE_VERSION}
 
 build: Dockerfile
 	docker build -t ${IMAGE_NAME}:${IMAGE_TAG} \
@@ -39,9 +39,5 @@ inspect: build
 
 push-all:
 push-all:
-	$(foreach VER, $(VERSIONS), $(MAKE) push-ver ANSIBLE_VERSION=$(VER); \
+	$(foreach VER, $(VERSIONS), $(MAKE) push ANSIBLE_VERSION=$(VER); \
 	)
-
-push-ver:
-	$(MAKE) push # vanilla
-	$(MAKE) push MOLECULE_VERSION=${MOLECULE_VERSION} IMAGE_TAG=ansible-${ANSIBLE_VERSION}-molecule-${MOLECULE_VERSION}
