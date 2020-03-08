@@ -1,66 +1,86 @@
+FROM centos:7 as vagrant_libvirt_builder
+
+RUN set -eux; \
+  # Install vagrant-libvirt dependencies
+  yum -y install \
+  gcc \
+  https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm \
+  virt-install \
+  libtool-ltdl \
+  libvirt \
+  libvirt-devel; \
+  # Build vagrant-libvirt plugin
+  vagrant plugin install vagrant-libvirt
+
+# ============================================
+
 FROM centos:7
-
 ENV container docker
+WORKDIR /root/
+
+RUN set -eux; \
+  # Install base
+  yum makecache fast; \
+  yum -y install epel-release; \
+  yum -y update; \
+  yum -y install \
+  sudo \
+  which \
+  vim; \
+  # Install molecule requirements  
+  yum -y install \
+  gcc \
+  python3-pip \
+  python3-devel \
+  openssh-clients \ 
+  openssl-devel \ 
+  libselinux-python \
+  git; \
+  # Install vagrant  
+  yum -y install \
+  https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm \
+  libvirt-libs; \
+  # Clean up mess
+  yum clean all
+
+# Place libvirt plugin    
+COPY --from=vagrant_libvirt_builder /root/.vagrant.d/plugins.json /root/.vagrant.d/plugins.json
+COPY --from=vagrant_libvirt_builder /root/.vagrant.d/gems/2.4.9/ /root/.vagrant.d/gems/2.4.9/
+
 ARG ANSIBLE_VERSION=2.8.0
-ARG MOLECULE_VERSION=2.22
+ARG MOLECULE_VERSION=3.0
 
-# Install systemd -- See https://hub.docker.com/_/centos/
-RUN yum -y update; yum clean all; \
-(cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/*;\
-rm -f /etc/systemd/system/*.wants/*;\
-rm -f /lib/systemd/system/local-fs.target.wants/*; \
-rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-rm -f /lib/systemd/system/basic.target.wants/*;\
-rm -f /lib/systemd/system/anaconda.target.wants/*;
-
-# Install requirements.
-RUN yum makecache fast \
-  && yum -y install deltarpm epel-release initscripts \
-  && yum -y update \
-  && yum -y install \
-      sudo \
-      which \
-      python-pip \
-      gcc \
-      python-devel \
-      openssh-clients \
-      git \
-      https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm \
-      libvirt \
-      libvirt-devel \
-      libvirt-python \
-      virt-install \
-  && yum install -y libtool-ltdl \
-  && yum install -y vim \
-  && yum remove python-requests -y \
-  && yum clean all \
-  && vagrant plugin install vagrant-libvirt
-
-RUN pip install --upgrade \
-      pip \
-      setuptools \
-  && pip install --no-cache-dir \
-      ansible==${ANSIBLE_VERSION}.* \
-      molecule==${MOLECULE_VERSION} \
-      docker \
-      python-vagrant
+RUN set -eux; \
+  # Pip
+  python3 -m pip install --no-cache-dir --upgrade \
+  pip \
+  setuptools; \
+  # Molcule drivers
+  python3 -m pip install --no-cache-dir \
+  docker \
+  python-vagrant; \
+  # Molecule
+  python3 -m pip install --no-cache-dir \
+  molecule==${MOLECULE_VERSION}.* \
+  molecule-vagrant \
+  ansible-lint \
+  flake8 \
+  yamllint \
+  ansible==${ANSIBLE_VERSION}.*
 
 # Disable requiretty.
-RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
+RUN set -eux; \
+  sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 
 # Install Ansible inventory file.
-RUN mkdir -p /etc/ansible
-RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
+RUN set -eux; \
+  mkdir -p /etc/ansible; \
+  echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
 COPY ansible.cfg /etc/ansible/ansible.cfg
 
 # Keys to access repo and verify host
-RUN mkdir -p /root/.ssh/ \
-  && chmod 700 ~/.ssh \
-  && ssh-keyscan -H git.zdt.io >> /root/.ssh/known_hosts \
-  && chmod 644 /root/.ssh/known_hosts
-
-#CMD ["/usr/sbin/init"]
-VOLUME [ "/sys/fs/cgroup" ]
-CMD ["/usr/lib/systemd/systemd"]
+RUN set -eux; \
+  mkdir -p /root/.ssh/; \
+  chmod 700 ~/.ssh; \
+  ssh-keyscan -H git.zdt.io >> /root/.ssh/known_hosts; \
+  chmod 644 /root/.ssh/known_hosts
