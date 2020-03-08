@@ -6,7 +6,6 @@ RUN set -eux; \
   gcc \
   https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm \
   virt-install \
-  libtool-ltdl \
   libvirt \
   libvirt-devel; \
   # Build vagrant-libvirt plugin
