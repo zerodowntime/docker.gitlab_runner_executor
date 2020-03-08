@@ -15,6 +15,7 @@ RUN set -eux; \
 
 FROM centos:7
 ENV container docker
+ENV LC_ALL=en_US.utf-8
 WORKDIR /root/
 
 RUN set -eux; \
@@ -68,9 +69,6 @@ RUN set -eux; \
   ansible==${ANSIBLE_VERSION}.*
 
 RUN set -eux; \
-  # Setup locale
-  LC_ALL=en_US.utf8 \
-  export LC_ALL; \
   # Disable requiretty.
   sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers; \
   # Install Ansible inventory file.
@@ -82,4 +80,5 @@ RUN set -eux; \
   ssh-keyscan -H git.zdt.io >> /root/.ssh/known_hosts; \
   chmod 644 /root/.ssh/known_hosts
 
+# Ansible config
 COPY ansible.cfg /etc/ansible/ansible.cfg
