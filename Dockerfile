@@ -39,6 +39,7 @@ RUN set -eux; \
   # Install vagrant  
   yum -y install \
   https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm \
+  libtool-ltdl \
   libvirt-libs; \
   # Clean up mess
   yum clean all
