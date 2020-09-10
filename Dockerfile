@@ -4,7 +4,7 @@ RUN set -eux; \
   # Install vagrant-libvirt dependencies
   yum -y install \
   gcc \
-  https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm \
+  https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rpm \
   virt-install \
   libvirt \
   libvirt-devel; \
@@ -38,7 +38,7 @@ RUN set -eux; \
   git; \
   # Install vagrant  
   yum -y install \
-  https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm \
+  https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rpm \
   libtool-ltdl \
   libvirt-libs; \
   # Clean up mess
@@ -46,7 +46,7 @@ RUN set -eux; \
 
 # Place libvirt plugin    
 COPY --from=vagrant_libvirt_builder /root/.vagrant.d/plugins.json /root/.vagrant.d/plugins.json
-COPY --from=vagrant_libvirt_builder /root/.vagrant.d/gems/2.4.9/ /root/.vagrant.d/gems/2.4.9/
+COPY --from=vagrant_libvirt_builder /root/.vagrant.d/gems/2.6.6/ /root/.vagrant.d/gems/2.6.6/
 
 ARG ANSIBLE_VERSION=2.8.0
 ARG MOLECULE_VERSION=3.0
