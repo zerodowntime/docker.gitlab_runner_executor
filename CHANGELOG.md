@@ -1,5 +1,13 @@
 # History
 
+## 1.5.2 (Sept 10, 2020)
+
+* Updated vagrant version to 2.2.9
+
+## 1.5.1 (Sept 10, 2020)
+
+* Adding missing ltdl library to Docker image
+
 ## 1.5.0 (March 8, 2020)
 
 * Dropped python2 in favour of python3
