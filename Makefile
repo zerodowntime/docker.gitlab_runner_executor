@@ -12,7 +12,7 @@ VERSIONS += 2.8.0 2.8
 VERSIONS += 2.9.0 2.9
 
 ANSIBLE_VERSION ?= $(lastword $(VERSIONS))
-MOLECULE_VERSION ?= 3.0
+MOLECULE_VERSION ?= 3.2
 
 IMAGE_NAME ?= zerodowntime/gitlab_runner_executor_molecule
 IMAGE_TAG  ?= ansible-${ANSIBLE_VERSION}-molecule-${MOLECULE_VERSION}
@@ -21,6 +21,7 @@ build: Dockerfile
 	docker build -t ${IMAGE_NAME}:${IMAGE_TAG} \
 		--build-arg ANSIBLE_VERSION=${ANSIBLE_VERSION} \
 		--build-arg MOLECULE_VERSION=${MOLECULE_VERSION} \
+		--file Dockerfile.docker \
 		.
 
 push: build
