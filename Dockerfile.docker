@@ -30,5 +30,8 @@ RUN set -eux; \
   flake8 \
   yamllint
 
+# Add reference to python3
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
 # Ansible config
 COPY ansible.cfg /etc/ansible/ansible.cfg
