@@ -1,5 +1,9 @@
 # History
 
+## 1.6.1 (Jan 27, 2021)
+
+- Setup base git directories
+
 ## 1.6.0 (Dec 21, 2020)
 
 - Dropped vagrant and libvirt
