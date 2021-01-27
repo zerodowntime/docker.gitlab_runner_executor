@@ -33,5 +33,13 @@ RUN set -eux; \
 # Add reference to python3
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
+RUN set -eux; \
+  # Keys to access repo and verify host
+  mkdir -p ~/.ssh/; \
+  chmod 700 ~/.ssh; \
+  ssh-keyscan -H gitlab.com >> ~/.ssh/known_hosts; \
+  ssh-keyscan -H github.com >> ~/.ssh/known_hosts; \
+  chmod 644 ~/.ssh/known_hosts
+
 # Ansible config
 COPY ansible.cfg /etc/ansible/ansible.cfg
